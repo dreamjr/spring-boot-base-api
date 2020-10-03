@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy:MM:dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}[%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="ROOT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/root.log</file>
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/root.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>180</maxHistory> <!-- 최근 6개월 까지의 로그만 저장 -->
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy:MM:dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}[%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="SERVICE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/service.log</file>
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/service.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>180</maxHistory> <!-- 최근 6개월 까지의 로그만 저장 -->
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>service %d{yyyy:MM:dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}[%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>180</maxHistory> <!-- 최근 6개월 까지의 로그만 저장 -->
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy:MM:dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}[%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="dev">
+        <root level="DEBUG">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="ROOT" />
+            <appender-ref ref="ERROR" />
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="ROOT" />
+            <appender-ref ref="ERROR" />
+        </root>
+        <logger name="com.dreamjr.baseapi.service" level="DEBUG" additivity="false">
+            <appender-ref ref="SERVICE" />
+        </logger>
+    </springProfile>
+</configuration>

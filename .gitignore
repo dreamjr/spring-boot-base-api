@@ -32,3 +32,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### custom ###
+LOG_HOME_IS_UNDEFINED

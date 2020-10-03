@@ -12,6 +12,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    // logback(slf4j)를 사용하기 때문에 모든 의존성에서 commons-logging는 제외
+    runtime.exclude module: 'commons-logging'
+    runtime.exclude module: 'log4j'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

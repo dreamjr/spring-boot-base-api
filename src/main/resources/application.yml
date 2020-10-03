@@ -2,6 +2,19 @@ server:
   port: 9091
 
 spring:
+  profiles:
+    active: dev
   devtools:
     livereload:
       enabled: true
+
+---
+# dev profile
+spring:
+  profiles: dev
+
+
+---
+# prod profile
+spring:
+  profiles: prod
