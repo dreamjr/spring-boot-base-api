@@ -20,6 +20,8 @@ dependencies {
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+
+    implementation 'org.projectlombok:lombok'
 }
 
 test {
