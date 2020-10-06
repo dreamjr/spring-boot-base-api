@@ -12,6 +12,15 @@ repositories {
     mavenCentral()
 }
 
+bootRun {
+    if ( project.hasProperty('args') ) {
+        args project.args.split('\\s+')
+    }
+    if ( project.hasProperty('jvmArgs') ) {
+        jvmArgs project.jvmArgs.split('\\s+')
+    }
+}
+
 configurations {
     // logback(slf4j)를 사용하기 때문에 모든 의존성에서 commons-logging는 제외
     runtime.exclude module: 'commons-logging'
@@ -27,6 +36,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     compile('org.apache.tomcat.embed:tomcat-embed-jasper')
 
+    annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.projectlombok:lombok'
 }
 
