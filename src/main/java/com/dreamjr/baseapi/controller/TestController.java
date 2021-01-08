@@ -1,10 +1,12 @@
 package com.dreamjr.baseapi.controller;
 
 import com.dreamjr.baseapi.domain.TestModel;
+import com.dreamjr.baseapi.domain.converter.Content;
 import com.dreamjr.baseapi.service.ITestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -25,5 +27,16 @@ public class TestController {
     @GetMapping("/test2")
     public TestModel test2() {
         return testService.getTest2();
+    }
+
+    @GetMapping("/test1/{content}")
+    public TestModel test1(
+            @PathVariable Content content
+    ) {
+
+        return new TestModel(
+                content.getId(),
+                content.getContent()
+        );
     }
 }
